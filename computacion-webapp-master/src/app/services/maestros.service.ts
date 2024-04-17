@@ -33,7 +33,7 @@ export class MaestrosService {
       'rfc': '',
       'cubiculo': '',
       'area_investigacion': '',
-      'materias': '',
+      'materias': [],
       'rol':''
     }
   }
@@ -104,6 +104,11 @@ export class MaestrosService {
       error["materias"] = this.errorService.required;
     }
 
+    if(data["materias"].length == 0){
+      error["materias"] = "Al menos debes elegir una materia";
+      //alert("Debes seleccionar materias para poder registrarte.");
+    }
+
     console.error(error);
     //Return arreglo
     return error;
@@ -120,5 +125,22 @@ export class MaestrosService {
     return this.http.get<any>(`${environment.url_api}/lista-maestro/`, {headers:headers});
   }
 
+  public getMaestroByID(idUser: Number){
+    return this.http.get<any>(`${environment.url_api}/maestro/?id=${idUser}`,httpOptions);
+  }
+
+  public editarMaestro (data: any): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/maestros-edit/`, data, {headers:headers});
+  }
+
+  //Eliminar Maestro
+  public eliminarMaestro(idUser: number): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.delete<any>(`${environment.url_api}/maestros-edit/?id=${idUser}`,{headers:headers});
+  }
+  
 
 }

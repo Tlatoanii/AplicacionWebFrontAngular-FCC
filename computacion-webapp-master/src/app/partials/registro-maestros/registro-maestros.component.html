@@ -73,26 +73,25 @@
       </mat-form-field>
       <div *ngIf="errors.cubiculo" class="invalid-feedback">{{ errors.cubiculo }}</div>
 
-      <mat-form-field class="mat-input" appearance="outline" placeholder="Area de investigacion">
-        <mat-label>Area de investigacion</mat-label>
-        <mat-select [(ngModel)]="area" name="area_investigacion">
-          <mat-option [value]="'Desarrollo Web'">Desarrollo Web</mat-option>
-          <mat-option [value]="'Programacion'">Programacion</mat-option>
-          <mat-option [value]="'Bases de Datos'">Bases de Datos</mat-option>
-          <mat-option [value]="'Matemáticas'">Matemáticas</mat-option>
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Área de investigación</mat-label>
+        <mat-select [(ngModel)]="maestro.area_investigacion">
+          <mat-option *ngFor="let area of area" [value]="area.viewValue">
+            {{area.viewValue}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
       <div *ngIf="errors.area_investigacion" class="invalid-feedback">{{ errors.area_investigacion }}</div>
-      
 
+      
       <div class="select-materias">
         <div class="row mt-3 mb-3">
           <div class="form-group col-12">
             <label class="title-materias" for="tipo_usuario">Selecciona las materias a impartir</label>
           </div>
         </div>
-        <div class="checkbox-group" *ngFor="let materia of materias; let i = index">
-          <mat-checkbox class="checkbox-item opc-sc" name="opsc" (change)="checkboxChange($event)" value="{{materia.nombre}}">
+        <div class="checkbox-group" *ngFor="let materia of materia; let i = index">
+          <mat-checkbox class="checkbox-item opc-sc" name="opsc" (change)="checkboxChange($event)" value="{{materia.nombre}}" [checked]="revisarSeleccion(materia.nombre)">
               <div class="d-checkbox-nombre">{{materia.nombre}}</div>
           </mat-checkbox>
         </div>
