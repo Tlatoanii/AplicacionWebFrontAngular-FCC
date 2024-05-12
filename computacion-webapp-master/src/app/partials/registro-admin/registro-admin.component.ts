@@ -71,6 +71,8 @@ export class RegistroAdminComponent implements OnInit{
    if (this.admin.password == this.admin.confirmar_password){
     // Se consume el servicio para consumir el API de registro
     // Siempre y cuando las contraseñas ingresadasd conincidan
+
+    console.log("Admin a registrar: ",this.admin)
     this.administradoresService.registrarAdmin(this.admin).subscribe(
       (response) =>{
         alert("Usuario registrado correctamente")

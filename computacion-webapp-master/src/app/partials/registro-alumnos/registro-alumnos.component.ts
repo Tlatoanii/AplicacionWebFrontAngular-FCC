@@ -44,12 +44,13 @@ export class RegistroAlumnosComponent implements OnInit{
       //Al iniciar la vista asignamos los datos del user
       this.alumno = this.datos_user;
     }else{
-      this.alumno = this.alumnosService.esquemaAlumno;
+      this.alumno = this.alumnosService.esquemaAlumno();
       this.alumno.rol = this.rol; 
       this.token = this.facadeService.getSessionToken();
     }
+    
     //Imprimir datos en consola
-    console.log("Admin: ", this.alumno);
+    console.log("Alumno: ", this.alumno);
 
   }
 
@@ -65,7 +66,9 @@ export class RegistroAlumnosComponent implements OnInit{
     if(!$.isEmptyObject(this.errors)){
       return false;
     }
-    
+    //Imprimir datos en consola
+    console.log("Alumno a registrar: ", this.alumno);
+
     // Se valida la contraseña
    if (this.alumno.password == this.alumno.confirmar_password){
     // Se consume el servicio para consumir el API de registro
@@ -77,6 +80,7 @@ export class RegistroAlumnosComponent implements OnInit{
         this.router.navigate(["/"]);
       }, (error)=>{
         alert("No se pudo regstrar usuarios")
+        console.log(this.alumno)
       }
     );
    }else{

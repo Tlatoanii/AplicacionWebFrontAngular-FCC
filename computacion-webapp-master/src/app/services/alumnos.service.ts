@@ -119,7 +119,8 @@ export class AlumnosService {
 
    /* Aqui van los servicios HTTP */
    public registrarAlumno(data: any): Observable <any>{
-    return this.http.post<any>(`${environment.url_api}/alumno/`, data, httpOptions);
+    console.log(data)
+    return this.http.post<any>(`${environment.url_api}/alumnoss/`, data, httpOptions);
   }
 
   public obtenerListaAlumnos (): Observable <any>{

@@ -90,7 +90,7 @@
             <label class="title-materias" for="tipo_usuario">Selecciona las materias a impartir</label>
           </div>
         </div>
-        <div class="checkbox-group" *ngFor="let materia of materia; let i = index">
+        <div class="checkbox-group" *ngFor="let materia of materia; let i = index"> 
           <mat-checkbox class="checkbox-item opc-sc" name="opsc" (change)="checkboxChange($event)" value="{{materia.nombre}}" [checked]="revisarSeleccion(materia.nombre)">
               <div class="d-checkbox-nombre">{{materia.nombre}}</div>
           </mat-checkbox>
