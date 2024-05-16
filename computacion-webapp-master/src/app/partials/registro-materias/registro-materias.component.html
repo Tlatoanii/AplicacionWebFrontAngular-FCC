@@ -27,17 +27,15 @@
         </mat-form-field>
         <div *ngIf="errors.nombre" class="invalid-feedback">{{ errors.nombre }}</div>
 
-        <mat-form-field class="mat-input" appearance="outline">
-            <mat-label>Hora de inicio</mat-label>
-            <input matInput [(ngModel)]="materia.horaInicio" placeholder="Escribe hora inicio">
-          </mat-form-field>
-          <div *ngIf="errors.horaInicio" class="invalid-feedback">{{ errors.horaInicio }}</div>
+        
+        <mat-label class="mat-input">Horario de inicio de clase</mat-label>
+        <timepicker [(ngModel)]="horaInicio">Hora Inicio</timepicker>
+        <div *ngIf="errors.horaInicio" class="invalid-feedback">{{ errors.horaInicio }}</div>
   
-          <mat-form-field class="mat-input" appearance="outline">
-              <mat-label>Hora fin</mat-label>
-              <input matInput [(ngModel)]="materia.horaFinal" placeholder="Escribe hora final">
-          </mat-form-field>
-          <div *ngIf="errors.horaFinal" class="invalid-feedback">{{ errors.horaFinal }}</div>
+          
+        <mat-label class="mat-input">Horario Fin de clase</mat-label>
+        <timepicker [(ngModel)]="horaFin"></timepicker>
+        <div *ngIf="errors.horaFinal" class="invalid-feedback">{{ errors.horaFinal }}</div>
 
         <div class="select-materias">
             <div class="row mt-3 mb-3">

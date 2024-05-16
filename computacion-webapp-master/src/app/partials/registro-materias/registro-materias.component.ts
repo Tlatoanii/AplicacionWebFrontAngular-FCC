@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { Location } from '@angular/common';
 import { MateriasService } from 'src/app/services/materias.service';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
 
 declare var $:any;
 
@@ -23,6 +23,10 @@ export class RegistroMateriasComponent {
   //Check
   public valoresCheckbox: any = [];
   public dias: any [] = [];
+
+  // Datos para el DateTimePicker
+  public horaInicio: Date = new Date();
+  public horaFin: Date = new Date();
 
   public dia:any[]= [
     {value: '1', nombre: 'Lunes'},
@@ -69,6 +73,12 @@ export class RegistroMateriasComponent {
     this.materiasService.getMateriaByID(this.idUser).subscribe(
       (response)=>{
         this.materia = response;
+        const [horasInicio, minutosInicio] = this.materia.horaInicio.split(':');
+        const [horasFin, minutosFin] = this.materia.horaFinal.split(':');
+        this.horaInicio = new Date();
+        this.horaFin = new Date();
+        this.horaInicio.setHours(parseInt(horasInicio, 10), parseInt(minutosInicio, 10), 0, 0);
+        this.horaFin.setHours(parseInt(horasFin, 10), parseInt(minutosFin, 10), 0, 0);
         console.log("Datos user: ", this.materia);
       }, (error)=>{
         alert("No se pudieron obtener los datos del usuario para editar");
@@ -79,11 +89,23 @@ export class RegistroMateriasComponent {
   public regresar(){
     this.location.back();
   }
+  public obtenerHoraIncio(): string {
+    // Obtén solo la parte de la hora de la cadena de fecha y hora
+    return this.horaInicio.toTimeString().split(' ')[0];
+  }
+
+  public obtenerHoraFin(): string {
+   // Obtén solo la parte de la hora de la cadena de fecha y hora
+   return this.horaFin.toTimeString().split(' ')[0];
+  }
 
   public registrar(){
     //Validar
     this.errors = [];
+    this.materia.horaInicio = this.obtenerHoraIncio();
+    this.materia.horaFinal = this.obtenerHoraFin();
 
+    console.log("Hora de date time picker",this.obtenerHoraFin());
     this.errors = this.materiasService.validarMateria(this.materia,this.editar);
     if(!$.isEmptyObject(this.errors)){
       return false;
@@ -105,10 +127,12 @@ export class RegistroMateriasComponent {
 
   }
 
+  
   public actualizar(){
     //Validación
     this.errors = [];
-
+    this.materia.horaInicio = this.obtenerHoraIncio();
+    this.materia.horaFinal = this.obtenerHoraFin();
     this.errors = this.materiasService.validarMateria(this.materia, this.editar);
     if(!$.isEmptyObject(this.errors)){
       return false;
