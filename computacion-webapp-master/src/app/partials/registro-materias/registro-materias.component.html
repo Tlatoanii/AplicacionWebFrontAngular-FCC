@@ -58,10 +58,14 @@
             <input matInput [(ngModel)]="materia.salon" placeholder="Escribe salón">
         </mat-form-field>
         <div *ngIf="errors.salon" class="invalid-feedback">{{ errors.salon }}</div>
-  
+
         <mat-form-field class="mat-input" appearance="outline">
           <mat-label>Programa Educativo</mat-label>
-          <input matInput [(ngModel)]="materia.programa" mask="Ciencias de la computación" placeholder="Escribe el programa educativo">
+          <mat-select [(ngModel)]="materia.programa">
+            <mat-option *ngFor="let programa of programa" [value]="programa.viewValue">
+              {{programa.viewValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <div *ngIf="errors.programa" class="invalid-feedback">{{ errors.programa }}</div>
   

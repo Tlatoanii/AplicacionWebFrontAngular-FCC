@@ -26,6 +26,7 @@ export class RegistroMaestrosComponent implements OnInit{
   public errors:any={};
   public editar:boolean = false;
   public idUser: Number = 0;
+  public rolUsuario: String = "";
   //Check
   public valoresCheckbox: any = [];
   public materias: any [] = [];
@@ -61,7 +62,7 @@ export class RegistroMaestrosComponent implements OnInit{
 
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     //El primer if valida si existe un parámetro en la URL
     if(this.activatedRoute.snapshot.params['id'] != undefined){
       this.editar = true;

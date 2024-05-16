@@ -5,15 +5,27 @@
         </button>
     </div>
     <div class="body-modal">
-        <h1 class="title-modal">Eliminar {{rol}}</h1>
-        <span class="descripcion">Estás a punto de eliminar este {{rol}}. Una vez que lo elimines no podrás deshacer esta acción.</span>
+        <h1 class="title-modal" *ngIf="this.accion == 'borrar'">Eliminar {{rol}}</h1>
+        <h1 class="title-modal" *ngIf="this.accion == 'editar'">Editar {{rol}}</h1>
+        <span class="descripcion" *ngIf="this.accion == 'borrar'">Estás a punto de eliminar este {{rol}}. Una vez que lo elimines no podrás deshacer esta acción.</span>
+        <span class="descripcion" *ngIf="this.accion == 'editar'">Estás a punto de editar este {{rol}}. Una vez que lo edites no podrás deshacer esta acción.</span>
         <div class="buttons-modal">
-            <button mat-button class="btn-regresar" (click)="cerrar_modal()">
+            <button *ngIf="this.accion == 'borrar'"  mat-button class="btn-regresar" (click)="cerrar_modal()">
                 Cancelar
             </button>
-            <button mat-button class="btn-eliminar" (click)="eliminarUser()">
+
+            <button *ngIf="this.accion == 'editar'"  mat-button class="btn-regresar-editar" (click)="cerrar_modal()">
+                Cancelar
+            </button>
+
+            <button *ngIf="this.accion == 'borrar'" mat-button class="btn-eliminar" (click)="eliminarUser()">
                 Eliminar
             </button>
+
+            <button *ngIf="this.accion == 'editar'" mat-button class="btn-editar" (click)="editarUser()">
+                Editar
+            </button>
+
         </div>
     </div>
   </div>

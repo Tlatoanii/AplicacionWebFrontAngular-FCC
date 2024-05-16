@@ -19,7 +19,8 @@ export class AlumnosScreenComponent implements OnInit{
   public lista_alumnos: any[] = [];
 
   //Para la tabla
-  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono', 'ocupacion', 'editar', 'eliminar'];
+ 
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,8 +33,19 @@ export class AlumnosScreenComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
+    
+    if(this.rol == "maestro"){
+      this.displayedColumns = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono'];
+    }
+    else{
+      this.displayedColumns = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono', 'ocupacion', 'ocupacion', 'editar', 'eliminar']
+    }
+
+    
+    console.log("ROL DE USUARIO:", this.rol);
     //Validar que haya inicio de sesión
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
@@ -97,24 +109,41 @@ export class AlumnosScreenComponent implements OnInit{
 
   //Funcion para editar
   public goEditar(idUser: number){
-    this.router.navigate(["registro-usuarios/alumno/"+idUser]);
-  }
-
-  public delete(idUser: number){
+    // this.router.navigate(["registro-usuarios/alumno/"+idUser]);
     const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-      data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
+      data: {id: idUser, rol: 'alumno', accion: 'editar'}, //Se pasan valores a través del componente
       height: '288px',
       width: '328px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.isDelete){
-        console.log("Alumno eliminado");
+        console.log("Alumno editado");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Alumno no editado ");
+        console.log("No se editó el alumno");
+      }
+    });
+
+  }
+
+  public delete(idUser: number){
+    const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+      data: {id: idUser, rol: 'alumno', accion: 'borrar'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Alumno editado");
         //Recargar página
         window.location.reload();
       }else{
         alert("Alumno no eliminado ");
-        console.log("No se eliminó el alumno");
+        console.log("No se edito el alumno");
       }
     });
 

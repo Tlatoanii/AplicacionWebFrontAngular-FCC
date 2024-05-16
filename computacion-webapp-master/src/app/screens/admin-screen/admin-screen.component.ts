@@ -16,6 +16,7 @@ import { FacadeService } from 'src/app/services/facade.service';
 export class AdminScreenComponent {
   public name_user:string = "";
   public lista_admins:any[]= [];
+  public rol:string = "";
 
   constructor(
     public facadeService: FacadeService,
@@ -26,7 +27,7 @@ export class AdminScreenComponent {
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
-
+    this.rol = this.facadeService.getUserGroup();
     this.obtenerAdmins();
   }
 
@@ -47,12 +48,29 @@ export class AdminScreenComponent {
  
   //Funcion para editar
   public goEditar(idUser: number){
-    this.router.navigate(["registro-usuarios/administrador/"+idUser]);
+    // this.router.navigate(["registro-usuarios/administrador/"+idUser]);
+    const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+      data: {id: idUser, rol: 'administrador', accion: 'editar'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Admin editado");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Administrador no editado");
+        console.log("No se edito el admin");
+      }
+    });
+
   }
 
   public delete(idUser: number){
     const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-      data: {id: idUser, rol: 'administrador'}, //Se pasan valores a través del componente
+      data: {id: idUser, rol: 'administrador', accion: 'borrar'}, //Se pasan valores a través del componente
       height: '288px',
       width: '328px',
     });

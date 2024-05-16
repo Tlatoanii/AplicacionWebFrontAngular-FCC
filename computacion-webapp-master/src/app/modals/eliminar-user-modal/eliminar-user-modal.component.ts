@@ -4,6 +4,7 @@ import { AdministradorService } from 'src/app/services/administrador.service';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
 import { MateriasService } from 'src/app/services/materias.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-eliminar-user-modal',
@@ -13,6 +14,7 @@ import { MateriasService } from 'src/app/services/materias.service';
 export class EliminarUserModalComponent implements OnInit{
 
   public rol: string = "";
+  public accion: String = "";
 
   constructor(
     private administradoresService: AdministradorService,
@@ -20,12 +22,14 @@ export class EliminarUserModalComponent implements OnInit{
     private alumnosService: AlumnosService,
     private materiasService: MateriasService,
     private dialogRef: MatDialogRef<EliminarUserModalComponent>,
+    private router: Router,
     @Inject (MAT_DIALOG_DATA) public data: any
   ){}
 
   ngOnInit(): void {
     this.rol = this.data.rol;
-    console.log("Rol modal: ", this.rol);
+    this.accion = this.data.accion;
+    console.log("Rol modal: ", this.accion);
 
   }
 
@@ -73,6 +77,22 @@ export class EliminarUserModalComponent implements OnInit{
         }
       );
     }
-
   }
+
+  public editarUser(){
+    if(this.rol == "administrador"){
+      this.router.navigate(["registro-usuarios/administrador/"+this.data.id]);
+      this.dialogRef.close({isDelete:true});
+    }else if(this.rol == "maestro"){
+      this.router.navigate(["registro-usuarios/maestro/"+this.data.id]);
+      this.dialogRef.close({isDelete:true});
+    }else if(this.rol == "alumno"){
+      this.router.navigate(["registro-usuarios/alumno/"+this.data.id]);
+      this.dialogRef.close({isDelete:true});
+    }else if(this.rol == "materia"){
+      this.router.navigate(["registro-materias/"+ this.data.id]);
+      this.dialogRef.close({isDelete:true});
+    }
+  }
+
 }

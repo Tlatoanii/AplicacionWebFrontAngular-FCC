@@ -130,7 +130,7 @@ export class AlumnosService {
   }
 
   public getAlumnoByID(idUser: Number){
-    return this.http.get<any>(`${environment.url_api}/alumno/?id=${idUser}`,httpOptions);
+    return this.http.get<any>(`${environment.url_api}/alumnoss/?id=${idUser}`,httpOptions);
   }
 
   public editarAlumno (data: any): Observable <any>{

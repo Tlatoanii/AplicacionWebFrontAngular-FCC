@@ -29,9 +29,15 @@ export class RegistroMateriasComponent {
     {value: '2', nombre: 'Martes'},
     {value: '3', nombre: 'Miercoles'},
     {value: '4', nombre: 'Jueves'},
-    {value: '5', nombre: 'Viernes'}
+    {value: '5', nombre: 'Viernes'},
+    {value: '6', nombre: 'Sábado'}
   ]
 
+  public programa: any[] = [
+    {value: '1', viewValue: 'Ingeniería en Ciencias de la Computación'},
+    {value: '2', viewValue: 'Licenciatura en Ciencias de la Computación'},
+    {value: '3', viewValue: 'Ingeniería en Tecnologías de la Información'},
+  ];
 
   constructor(
     private location : Location,

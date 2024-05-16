@@ -13,6 +13,7 @@ import { MaestrosService } from 'src/app/services/maestros.service';
 export class MaestrosScreenComponent {
   public name_user:string = "";
   public lista_maestro:any[]= [];
+  public rol: String = "";
 
   constructor(
     public facadeService: FacadeService,
@@ -23,7 +24,7 @@ export class MaestrosScreenComponent {
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
-
+    this.rol = this.facadeService.getUserGroup();
     this.obtenerAdmins();
   }
  
@@ -42,12 +43,29 @@ export class MaestrosScreenComponent {
 
   //Funcion para editar
   public goEditar(idUser: number){
-    this.router.navigate(["registro-usuarios/maestro/"+idUser]);
+    // this.router.navigate(["registro-usuarios/maestro/"+idUser]);
+    const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+      data: {id: idUser, rol: 'maestro', accion: 'editar' }, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Maestro editado");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Maestro no editado");
+        console.log("No se editó el maestro");
+      }
+    });
+
   }
 
   public delete(idUser: number){
     const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-      data: {id: idUser, rol: 'maestro'}, //Se pasan valores a través del componente
+      data: {id: idUser, rol: 'maestro', accion: 'borrar'}, //Se pasan valores a través del componente
       height: '288px',
       width: '328px',
     });

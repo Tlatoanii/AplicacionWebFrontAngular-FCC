@@ -7,7 +7,7 @@
       <div class="col-12">
         <span class="title-perfil">Bienvenido {{name_user}}</span>
         <br><br>
-        <span class="title-perfil">Administrador</span>
+        <span class="title-perfil"> {{rol}} </span>
       </div>
     </div>
     <div class="container">
@@ -26,8 +26,8 @@
             <th scope="col">Email</th>
             <th scope="col">RFC</th>
             <th scope="col">Ocupación</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
+            <th scope="col" *ngIf="this.rol == 'administrador'">Editar</th>
+            <th scope="col" *ngIf="this.rol == 'administrador'">Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
             <td>{{admin.user.email}}</td>
             <td>{{admin.rfc}}</td>
             <td>{{admin.ocupacion}}</td>
-            <td class="td-editar"><i class="bi bi-pencil-square" (click)="goEditar(admin.id)"></i></td>
+            <td class="td-editar" ><i class="bi bi-pencil-square" (click)="goEditar(admin.id)"></i></td>
             <td class="td-eliminar"><i class="bi bi-trash3-fill" (click)="delete(admin.id)"></i></td>
           </tr>
         </tbody>

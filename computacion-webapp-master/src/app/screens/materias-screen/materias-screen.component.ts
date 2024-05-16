@@ -13,6 +13,7 @@ import { MateriasService } from 'src/app/services/materias.service';
 export class MateriasScreenComponent {
   public name_user:string = "";
   public lista_materia:any[]= [];
+  public rol: String = "";
 
   constructor(
     public facadeService: FacadeService,
@@ -24,7 +25,7 @@ export class MateriasScreenComponent {
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
-
+    this.rol = this.facadeService.getUserGroup();
     this.obtenerAdmins();
   }
 
@@ -42,12 +43,28 @@ export class MateriasScreenComponent {
   }
 
   public goEditar(idUser: number){
-    this.router.navigate(["registro-materias/"+idUser]);
+    // this.router.navigate(["registro-materias/"+idUser]);
+    const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+      data: {id: idUser, rol: 'materia', accion: 'editar'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Materia editada");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Materia no editada");
+        console.log("No se editó la materia");
+      }
+    });
   }
 
   public delete(idUser: number){
     const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-      data: {id: idUser, rol: 'materia'}, //Se pasan valores a través del componente
+      data: {id: idUser, rol: 'materia', accion: 'borrar'}, //Se pasan valores a través del componente
       height: '288px',
       width: '328px',
     });
