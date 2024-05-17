@@ -37,7 +37,7 @@ export class AlumnosScreenComponent implements OnInit{
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
     
-    if(this.rol == "maestro"){
+    if(this.rol == "maestro" || this.rol == "alumno"){
       this.displayedColumns = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono'];
     }
     else{
